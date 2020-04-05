@@ -1,0 +1,1 @@
+var search_data = {"index":{"searchIndex":["readme"],"longSearchIndex":[""],"info":[["README","","README_rdoc.html","","<p>Neo Ruby Koans\n<p>The Ruby Koans walk you along the path to enlightenment in order to learn Ruby. The goal …\n"]]}}
