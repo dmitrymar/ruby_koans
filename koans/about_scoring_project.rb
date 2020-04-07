@@ -29,70 +29,14 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
-# create a unique die 
-# create a points_array that holds all points for each step
-# Devide a set of same random numbers by 3. If remainder is 0 and the die was a 1 then set each 3 to 1000 points otherwise set it to 500. 
-# If there is a remainder - if die is 1 then multiply it by 100 if its 5 multiply by 50
-# Reduce points_array to a single value by accumulating all values in it
-# Work backwards from return points_array
 def score(dice)
-  # You need to write this method
   if dice.length == 0
     return 0
   end
   points_array = []
-  counter = 0
-  sorted_dice = dice.sort
-  uniq_dice = sorted_dice.uniq
-  uniq_quantity = []
-  counter = 0
-  uniq_item = 0
-  die_points = 0
-  last_die = 0
-  sorted_dice.each  do |die|
-    # check length if its 1 then return 
-    if uniq_item == 0
-      uniq_item = die
-    end
-    if die == uniq_item
-      counter +=1
-    else
-      uniq_quantity.push(counter)
-      counter = 1
-    end
-  end
-  # another_array = array.map { |item| item + 10 }
-  sorted_dice.each do |die|
-    if last_die == die
-      counter += 1
-    else
-      if last_die == 1
-        die_points = 100
-      elsif last_die == 5
-        die_points = 50
-      else
-        last_die = die
-        counter = 1
-      end
-    end
-    if counter == 3
-      
-    end
-    if die == 1
-      counter += 1
-      if (counter % 3 > 0)
-        die_points = 100
-      else
-        die_points = 1000
-      end 
-    else
-      die_points = 0
-    end
-  end
-  puts "#{dice}"
-  ones = sorted_dice.select { |n| n == 1 }
-  fives = sorted_dice.select { |n| n == 5 }
-  others = sorted_dice.select { |n| n != 1 || n != 5 }
+  ones = dice.select { |n| n == 1 }
+  fives = dice.select { |n| n == 5 }
+  others = dice.select { |n| n != 1 && n != 5 }
   def calc(arr, type=nil)
     total = arr.length
     score = 0 
@@ -106,12 +50,13 @@ def score(dice)
   end
   if ones.length > 0
     points_array.push(calc(ones, 1))
-  elsif fives.length > 0
+  end
+  if fives.length > 0
     points_array.push(calc(fives, 5))
-  elsif others.legth > 0
-    points_array.push(calc(others, sorted_dice))
-  else
-    return 0
+  end
+  if others.length > 0
+    puts "#{others}"
+    points_array.push(calc(others))
   end
   return points_array.reduce(0, :+)
 end
