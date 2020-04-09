@@ -33,32 +33,38 @@ def score(dice)
   if dice.length == 0
     return 0
   end
-  points_array = []
-  ones = dice.select { |n| n == 1 }
-  fives = dice.select { |n| n == 5 }
-  others = dice.select { |n| n != 1 && n != 5 }
-  def calc(arr, type=nil)
-    total = arr.length
-    score = 0 
-    remainder = total % 3
-    single = type == 1 ? 100 : 50
-    if total >= 3 
-      score = type == 1 ? 1000 : 500
+
+  uniq_quantity = []
+  uniq_item = 0
+  sorted_dice = dice.sort
+  counter = 0
+  total = 0
+  tossed_die = []
+  selected_die = []
+
+  sorted_dice.each_with_index  do |die, i|
+    tossed_die.push(die)
+    selected_die = tossed_die.select { |n| n == die }
+    if selected_die.length == 3
+      if die == 1
+        total += 800
+      elsif die == 5
+        total += 400
+      else
+        subtotal = die * 100
+        total += subtotal
+      end
     end
-    score += remainder * single
-    return score
+    if selected_die.length != 3
+      if die == 1
+        total += 100
+      end
+      if die == 5
+        total += 50
+      end
+    end
   end
-  if ones.length > 0
-    points_array.push(calc(ones, 1))
-  end
-  if fives.length > 0
-    points_array.push(calc(fives, 5))
-  end
-  if others.length > 0
-    puts "#{others}"
-    points_array.push(calc(others))
-  end
-  return points_array.reduce(0, :+)
+  return total
 end
 
 class AboutScoringProject < Neo::Koan
