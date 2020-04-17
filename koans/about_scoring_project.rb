@@ -34,10 +34,7 @@ def score(dice)
     return 0
   end
 
-  uniq_quantity = []
-  uniq_item = 0
   sorted_dice = dice.sort
-  counter = 0
   total = 0
   tossed_die = []
   selected_die = []
